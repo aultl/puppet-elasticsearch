@@ -61,9 +61,9 @@ class elasticsearch::install inherits elasticsearch {
   }
 
   # Install elasticsearch package
-  package { 'jtv-elasticsearch' :
+  package { 'elasticsearch' :
     ensure  => present,
-    require => [ User['user_es'], Repo['jtv-apps'], File['es_service_path'] ]
+    require => [ User['user_es'], Repo['inhouse-apps'], File['es_service_path'] ]
   }
 
 }
