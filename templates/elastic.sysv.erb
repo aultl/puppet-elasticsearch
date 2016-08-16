@@ -1,0 +1,77 @@
+#!/bin/env bash
+# elasticsearch: Start/Stop elasticsearch
+#
+# chkconfig: - 90 10
+# description: elasticsearch is a tool from http://elastic.co 
+# processname: elasticsearch
+ 
+. /etc/init.d/functions
+. /etc/sysconfig/network
+ 
+SERVICENAME=elasticsearch
+SERVICE_USER=es_user
+REQUIRE_SU=0
+export JAVA_HOME=<%= @java_home %>
+ 
+if [ ! $USER == $SERVICE_USER ]; then
+  if [ $USER == "root" ]; then
+    REQUIRE_SU=1
+  else
+    echo "Script must be run by $SERVICE_USER or root. You are $USER"
+    exit 1
+  fi
+fi
+ 
+start(){
+  echo "Starting Elasticsearch: "
+  su - $SERVICE_USER -c "<%= @service_path %>/current/bin/elasticsearch -d -p <%= @service_path %>/es.pid"
+  if [ $? -eq 0 ]; then
+    success; echo
+  else
+    failure; echo; return 1
+  fi
+}
+
+stop(){
+  echo "Shutting down Elasticsearch: "
+  su - $SERVICE_USER -c "kill -15 `cat <%= @service_path %>/es.pid`"
+  if [ $? -eq 0 ]; then
+    success; echo
+  else
+    failure; echo; return 1
+  fi
+  rm <%= @service_path %>/es.pid
+}
+ 
+status() {
+  if [ -z "<%= @service_path %>/es.pid" ]; then
+    pid="$(cat <%= @service_path %>/es.pid)"
+  fi
+  if [ -z "$pid" ]; then
+    echo "${SERVICENAME} is stopped"
+  else
+    echo "${SERVICENAME} (pid $pid) is running..."
+  fi
+}
+
+case "$1" in
+  start)
+    start
+  ;;
+  stop)
+    stop
+  ;;
+  status)
+    status
+  ;;
+  restart)
+    stop
+    start
+  ;;
+  *)
+    echo $"Usage: $0 {start|stop|restart|status}"
+    exit 1
+  ;;
+esac
+exit $?
+

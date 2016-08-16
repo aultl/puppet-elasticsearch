@@ -1,0 +1,14 @@
+# THIS FILE IS MANAGED BY PUPPET!
+[Unit]
+Description=Elasticsearch daemon
+After=local-fs.target network.target
+
+[Service]
+User=etcd
+Type=simple
+WorkingDirectory=/services/elasticsearch/current
+ExecStart=/services/elasticsearch/current/bin/elasticsearch -d 
+PIDFile=/services/elasticsearch/es.pid
+
+[Install]
+WantedBy=multi-user.target
