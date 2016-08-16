@@ -9,7 +9,7 @@ class elasticsearch::config inherits elasticsearch {
 
   # can user remotely login?
   if ( $allow_login ) {
-    jtv_access::entry { 'es_user' :
+    access::entry { 'es_user' :
       user  => $elasticsearch::params::user_name,
       login => true,
     }

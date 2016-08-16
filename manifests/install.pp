@@ -1,6 +1,5 @@
 # install.pp - install the elasticsearch server
 class elasticsearch::install inherits elasticsearch {
-  include jtv_root::params
   # Create group
   group { 'es_group' :
     ensure => present,
