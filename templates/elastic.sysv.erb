@@ -9,9 +9,9 @@
 . /etc/sysconfig/network
  
 SERVICENAME=elasticsearch
-SERVICE_USER=es_user
+SERVICE_USER=<%= @user_name %>
 REQUIRE_SU=0
-export JAVA_HOME=<%= @java_home %>
+export JAVA_HOME=<%= @java_home %>/current
  
 if [ ! $USER == $SERVICE_USER ]; then
   if [ $USER == "root" ]; then
@@ -44,7 +44,7 @@ stop(){
 }
  
 status() {
-  if [ -z "<%= @service_path %>/es.pid" ]; then
+  if [ -e "<%= @service_path %>/es.pid" ]; then
     pid="$(cat <%= @service_path %>/es.pid)"
   fi
   if [ -z "$pid" ]; then
