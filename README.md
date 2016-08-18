@@ -26,4 +26,4 @@ This module will support all the various elasticsearch node types: client, maste
    use_iptables  => 'yes',<br/>
  }<br/>
 
-The 'use_iptables' flag causes the module to call my puppet-iptables module and open the listen port specified.
+The 'use_iptables' flag causes the module to call my puppet-iptables module and open the listen port specified. Deafaults to 9200 and 9300.
