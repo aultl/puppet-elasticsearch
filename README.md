@@ -22,8 +22,11 @@ This module will support all the various elasticsearch node types: client, maste
    heap_size     => '4G',<br/>
    cluster_nodes => [ 'node1.example.tld', 'node2.example.tld', 'node3.example.tld' ],<br/>
    cluster_name  => 'log_cluster_01',<br/>
+   client_port   => '9200',<br/>
+   peer_port     => '9300',<br/>
    mlockall      => true,<br/>
    use_iptables  => 'yes',<br/>
  }<br/>
 
-The 'use_iptables' flag causes the module to call my puppet-iptables module and open the listen port specified. Deafaults to 9200 and 9300.
+The 'use_iptables' flag causes the module to call my puppet-iptables module and open the default client and sync ports (9200 & 9300).
+
